@@ -5,7 +5,7 @@ const DADOS = window.MEUDIA.dados;
 const ler = (chave, padrao = []) =>
     (DADOS[chave] !== undefined && DADOS[chave] !== null) ? DADOS[chave] : padrao;
 
-let tasks = ler("tarefas"),
+let tarefas = ler("tarefas"),
     agenda = ler("agenda"),
     notas = ler("notas"),
     gastos = ler("gastos"),
@@ -42,23 +42,23 @@ const salvar = (chave, dados) => {
     })
     .then(r => {
         if (r.status === 401) {
-            alert("Your session has expired. Please log in again.");
+            alert("Sua sessão expirou. Faça login novamente.");
             window.location.href = "login.php";
             return;
         }
         if (!r.ok) {
             delete ultimoSalvo[chave];
-            avisar("Unable to save. Please try again.");
+            avisar("Não foi possível salvar. Tente novamente.");
         }
     })
     .catch(() => {
         delete ultimoSalvo[chave];
-        avisar("No connection to the server. Your changes may not have been saved.");
+        avisar("Sem conexão com o servidor. Suas alterações podem não ter sido salvas.");
     });
 };
 
 function dinheiro(valor){
-    return Number(valor).toLocationeString("en-GB",{
+    return Number(valor).toLocaleString("en-GB",{
         style:"currency",
         currency:"BRL"
     });
@@ -103,17 +103,17 @@ function abrirPaginaSemMenu(id){
 
 /* ================= TAREFAS ================= */
 
-function adicionarTask(){
-    const texto = valor("tarefaText");
-    const prioridade = $("tarefaPriority").value;
-    const prazo = $("tarefaDeadline").value;
+function adicionarTarefa(){
+    const texto = valor("tarefaTexto");
+    const prioridade = $("tarefaPrioridade").value;
+    const prazo = $("tarefaPrazo").value;
 
     if(!texto){
-        alert("Digite uma task.");
+        alert("Enter a task.");
         return;
     }
 
-    tasks.push({
+    tarefas.push({
         id:Date.now(),
         texto,
         prioridade,
@@ -122,24 +122,24 @@ function adicionarTask(){
     });
 
     salvarTudo();
-    limpar("tarefaText","tarefaDeadline");
+    limpar("tarefaTexto","tarefaPrazo");
     renderizar();
 }
 
-function concluirTask(id){
+function concluirTarefa(id){
 
-    const task = tasks.find(t => t.id === id);
+    const tarefa = tarefas.find(t => t.id === id);
 
-    if(tarefa) task.concluida = !tarefa.concluida;
+    if(tarefa) tarefa.concluida = !tarefa.concluida;
 
     salvarTudo();
     renderizar();
 }
 
-function removerTask(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+function removerTarefa(id){
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
-    tasks = tasks.filter(t => t.id !== id);
+    tarefas = tarefas.filter(t => t.id !== id);
 
     salvarTudo();
     renderizar();
@@ -150,10 +150,10 @@ function removerTask(id){
 
 function adicionarEvento(){
 
-    const nome = valor("eventoName");
-    const data = $("eventoDate").value;
+    const nome = valor("eventoNome");
+    const data = $("eventoData").value;
     const hora = $("eventoHora").value;
-    const local = valor("eventoLocation");
+    const local = valor("eventoLocal");
 
     if(!nome || !data){
         alert("Enter the event and date.");
@@ -170,17 +170,17 @@ function adicionarEvento(){
 
     salvarTudo();
     limpar(
-        "eventoName",
-        "eventoDate",
+        "eventoNome",
+        "eventoData",
         "eventoHora",
-        "eventoLocation"
+        "eventoLocal"
     );
 
     renderizar();
 }
 
 function removerEvento(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
     agenda = agenda.filter(e => e.id !== id);
 
@@ -194,7 +194,7 @@ function removerEvento(id){
 function adicionarNota(){
 
     const titulo = valor("notaTitulo");
-    const texto = valor("notaText");
+    const texto = valor("notaTexto");
 
     if(!titulo || !texto){
         alert("Please enter a title and text.");
@@ -205,16 +205,16 @@ function adicionarNota(){
         id:Date.now(),
         titulo,
         texto,
-        data:new Date().toLocationeDateString("en-GB")
+        data:new Date().toLocaleDateString("pt-BR")
     });
 
     salvarTudo();
-    limpar("notaTitulo","notaText");
+    limpar("notaTitulo","notaTexto");
     renderizar();
 }
 
 function removerNota(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
     notas = notas.filter(n => n.id !== id);
 
@@ -225,20 +225,20 @@ function removerNota(id){
 
 /* ================= FINANÇAS ================= */
 
-function salvarIncome(){
+function salvarRenda(){
 
-    const valorIncome = Number($("rendaInput").value);
+    const valorRenda = Number($("rendaInput").value);
 
-    if(isNaN(valorIncome) || valorIncome < 0){
+    if(isNaN(valorRenda) || valorRenda < 0){
         alert("Enter a valid income amount.");
         return;
     }
 
-    renda = valorIncome;
+    renda = valorRenda;
 
     salvar("renda", renda);
 
-    alert("Income salva com sucesso!");
+    alert("Income saved successfully!");
 
     renderizar();
 }
@@ -246,8 +246,8 @@ function salvarIncome(){
 function adicionarGasto(){
 
     const descricao = valor("gastoDescricao");
-    const valorGasto = Number($("gastoAmount").value);
-    const categoria = $("gastoCategory").value;
+    const valorGasto = Number($("gastoValor").value);
+    const categoria = $("gastoCategoria").value;
 
     if(!descricao || !valorGasto || valorGasto <= 0){
         alert("Enter a description and amount.");
@@ -259,16 +259,16 @@ function adicionarGasto(){
         descricao,
         valor:valorGasto,
         categoria,
-        data:new Date().toLocationeDateString("en-GB")
+        data:new Date().toLocaleDateString("pt-BR")
     });
 
     salvarTudo();
-    limpar("gastoDescricao","gastoAmount");
+    limpar("gastoDescricao","gastoValor");
     renderizar();
 }
 
 function removerGasto(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
     gastos = gastos.filter(g => g.id !== id);
 
@@ -310,7 +310,7 @@ function marcarCompra(id){
 }
 
 function removerCompra(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
     compras = compras.filter(c => c.id !== id);
 
@@ -362,7 +362,7 @@ function concluirEstudo(id){
 }
 
 function removerEstudo(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
     estudos = estudos.filter(e => e.id !== id);
 
@@ -373,14 +373,14 @@ function removerEstudo(id){
 
 /* ================= TRABALHO ================= */
 
-function adicionarWork(){
+function adicionarTrabalho(){
 
-    const texto = valor("trabalhoText");
-    const data = $("trabalhoDate").value;
+    const texto = valor("trabalhoTexto");
+    const data = $("trabalhoData").value;
     const obs = valor("trabalhoObs");
 
     if(!texto){
-        alert("Digite a atividade.");
+        alert("Enter an assignment.");
         return;
     }
 
@@ -395,15 +395,15 @@ function adicionarWork(){
     salvarTudo();
 
     limpar(
-        "trabalhoText",
-        "trabalhoDate",
+        "trabalhoTexto",
+        "trabalhoData",
         "trabalhoObs"
     );
 
     renderizar();
 }
 
-function concluirWork(id){
+function concluirTrabalho(id){
 
     const item = trabalhos.find(t => t.id === id);
 
@@ -413,8 +413,8 @@ function concluirWork(id){
     renderizar();
 }
 
-function removerWork(id){
-    if(!confirm("Tem certeza que deseja excluir este item?")) return;
+function removerTrabalho(id){
+    if(!confirm("Are you sure you want to delete this item?")) return;
 
     trabalhos = trabalhos.filter(t => t.id !== id);
 
@@ -428,10 +428,10 @@ function removerWork(id){
 function salvarPerfil(){
 
     const campos = {
-        nome:"perfilName",
-        cidade:"perfilCity",
+        nome:"perfilNome",
+        cidade:"perfilCidade",
         profissao:"perfilProfissao",
-        objetivo:"perfilGoal",
+        objetivo:"perfilObjetivo",
         sobre:"perfilSobre"
     };
 
@@ -447,10 +447,10 @@ function salvarPerfil(){
 function carregarPerfil(){
 
     const campos = {
-        nome:"perfilName",
-        cidade:"perfilCity",
+        nome:"perfilNome",
+        cidade:"perfilCidade",
         profissao:"perfilProfissao",
-        objetivo:"perfilGoal",
+        objetivo:"perfilObjetivo",
         sobre:"perfilSobre"
     };
 
@@ -465,7 +465,7 @@ function atualizarSaudacao(){
     const nome = ler("nome", "") || nomeLogin;
 
     $("saudacao").textContent =
-        nome ? "Olá, " + nome + "!" : "Hello!";
+        nome ? "Hello, " + nome + "!" : "Hello!";
 }
 
 
@@ -476,7 +476,7 @@ function buscarTudo(){
     const termo = valor("buscaGeral").toLowerCase();
 
     if(!termo){
-        alert("Digite algo para pesquisar.");
+        alert("Enter something to search for.");
         return;
     }
 
@@ -504,36 +504,36 @@ function buscarTudo(){
     };
 
     pesquisar(
-        tasks,
-        "Task",
+        tarefas,
+        "Tarefa",
         ["texto"],
         "texto"
     );
 
     pesquisar(
         notas,
-        "Anotação",
+        "Note",
         ["titulo","texto"],
         "titulo"
     );
 
     pesquisar(
         compras,
-        "Compra",
+        "Shopping item",
         ["produto"],
         "produto"
     );
 
     pesquisar(
         estudos,
-        "Estudo",
+        "Study item",
         ["materia","atividade"],
         e => e.materia + " - " + e.atividade
     );
 
     pesquisar(
         trabalhos,
-        "Work",
+        "Trabalho",
         ["texto"],
         "texto"
     );
@@ -557,47 +557,47 @@ function buscarTudo(){
 
 function renderizar(){
 
-    renderTasks();
-    renderCalendar();
-    renderNotes();
+    renderTarefas();
+    renderAgenda();
+    renderNotas();
     renderFinancas();
-    renderShopping();
-    renderStudies();
-    renderWork();
+    renderCompras();
+    renderEstudos();
+    renderTrabalho();
     atualizarDashboard();
 }
 
 
 /* ================= RENDER TAREFAS ================= */
 
-function renderTasks(){
-    const div = $("listaTasks");
+function renderTarefas(){
+    const div = $("listaTarefas");
 
     if(!tarefas.length){
         div.innerHTML = `<p class="vazio">No tasks added yet.</p>`;
         return;
     }
 
-    div.innerHTML = tasks.map(t => `
+    div.innerHTML = tarefas.map(t => `
         <div class="item">
             <div class="item-left">
                 <input
                     class="check"
                     type="checkbox"
                     ${t.concluida ? "checked" : ""}
-                    onchange="concluirTask(${t.id})">
+                    onchange="concluirTarefa(${t.id})">
                 <div>
                     <strong class="texto-multi ${t.concluida ? "concluida" : ""}">${esc(t.texto)}</strong>
                     <br>
-                    <small>Priority: ${esc(t.prioridade)}</small>
-                    ${t.prazo ? "<br>" + etiquetaDeadline(t) : ""}
+                    <small>Prioridade: ${esc(t.prioridade)}</small>
+                    ${t.prazo ? "<br>" + etiquetaPrazo(t) : ""}
                 </div>
             </div>
             <div class="item-actions">
-                <button class="btn btn-secondary" onclick="editarTask(${t.id})">
+                <button class="btn btn-secondary" onclick="editarTarefa(${t.id})">
                     Editar
                 </button>
-                <button class="btn btn-danger" onclick="removerTask(${t.id})">
+                <button class="btn btn-danger" onclick="removerTarefa(${t.id})">
                     Excluir
                 </button>
             </div>
@@ -608,8 +608,8 @@ function renderTasks(){
 
 /* ================= RENDER AGENDA ================= */
 
-function renderCalendar(){
-    const div = $("listaCalendar");
+function renderAgenda(){
+    const div = $("listaAgenda");
 
     if(!agenda.length){
         div.innerHTML = `<p class="vazio">No events added yet.</p>`;
@@ -626,7 +626,7 @@ function renderCalendar(){
                 <strong>${esc(e.nome)}</strong>
                 <br>
                 <small>
-                    ${formatarDate(e.data)}
+                    ${formatarData(e.data)}
                     ${e.hora ? " • ⏰ " + esc(e.hora) : ""}
                     ${e.local ? " • " + esc(e.local) : ""}
                 </small>
@@ -646,8 +646,8 @@ function renderCalendar(){
 
 /* ================= RENDER NOTAS ================= */
 
-function renderNotes(){
-    const div = $("listaNotes");
+function renderNotas(){
+    const div = $("listaNotas");
 
     if(!notas.length){
         div.innerHTML = `<p class="vazio">No notes saved yet.</p>`;
@@ -686,17 +686,17 @@ function renderFinancas(){
 
     const saldo = renda - total;
 
-    $("rendaAmount").textContent = dinheiro(renda);
-    $("gastosAmount").textContent = dinheiro(total);
-    $("saldoAmount").textContent = dinheiro(saldo);
+    $("rendaValor").textContent = dinheiro(renda);
+    $("gastosValor").textContent = dinheiro(total);
+    $("saldoValor").textContent = dinheiro(saldo);
 
-    $("dashIncome").textContent = dinheiro(renda);
-    $("dashExpenses").textContent = dinheiro(total);
-    $("dashBalance").textContent = dinheiro(saldo);
+    $("dashRenda").textContent = dinheiro(renda);
+    $("dashGastos").textContent = dinheiro(total);
+    $("dashSaldo").textContent = dinheiro(saldo);
 
     renderGrafico();
 
-    const div = $("listaExpenses");
+    const div = $("listaGastos");
 
     if(!gastos.length){
         div.innerHTML = `<p class="vazio">No expenses added yet.</p>`;
@@ -732,8 +732,8 @@ function renderFinancas(){
 
 /* ================= RENDER COMPRAS ================= */
 
-function renderShopping(){
-    const div = $("listaShopping");
+function renderCompras(){
+    const div = $("listaCompras");
 
     if(!compras.length){
         div.innerHTML = `<p class="vazio">Your list is empty.</p>`;
@@ -766,9 +766,9 @@ function renderShopping(){
 
 /* ================= RENDER ESTUDOS ================= */
 
-function renderStudies(){
+function renderEstudos(){
 
-    const div = $("listaStudies");
+    const div = $("listaEstudos");
 
     if(!estudos.length){
         div.innerHTML =
@@ -817,9 +817,9 @@ function renderStudies(){
 
 /* ================= RENDER TRABALHO ================= */
 
-function renderWork(){
+function renderTrabalho(){
 
-    const div = $("listaWork");
+    const div = $("listaTrabalho");
 
     if(!trabalhos.length){
         div.innerHTML =
@@ -838,7 +838,7 @@ function renderWork(){
                     class="check"
                     type="checkbox"
                     ${t.concluida ? "checked" : ""}
-                    onchange="concluirWork(${t.id})">
+                    onchange="concluirTrabalho(${t.id})">
 
                 <div>
 
@@ -849,7 +849,7 @@ function renderWork(){
                     <br>
 
                     <small>
-                        ${t.data ? "Deadline: " + t.data : ""}
+                        ${t.data ? "Due: " + t.data : ""}
                         ${t.obs ? " • " + esc(t.obs) : ""}
                     </small>
 
@@ -859,7 +859,7 @@ function renderWork(){
 
             <button
                 class="btn btn-danger"
-                onclick="removerWork(${t.id})">
+                onclick="removerTrabalho(${t.id})">
                 Excluir
             </button>
 
@@ -871,24 +871,24 @@ function renderWork(){
 /* ================= DASHBOARD ================= */
 
 function atualizarDashboard(){
-    $("totalTasks").textContent = tasks.length;
-    $("totalCalendar").textContent = agenda.length;
-    $("totalShopping").textContent = compras.length;
-    $("totalNotes").textContent = notas.length;
+    $("totalTarefas").textContent = tarefas.length;
+    $("totalAgenda").textContent = agenda.length;
+    $("totalCompras").textContent = compras.length;
+    $("totalNotas").textContent = notas.length;
 
-    const pendentes = tasksPendentes();
-    const overdues = pendentes.filter(t => statusDeadline(t) === "overdue").length;
+    const pendentes = tarefasPendentes();
+    const atrasadas = pendentes.filter(t => statusPrazo(t) === "atrasada").length;
     const proximas = pendentes.slice(0,5);
 
-    const div = $("resumoTasks");
+    const div = $("resumoTarefas");
 
     if(!proximas.length){
         div.innerHTML = `<p class="vazio">You're all caught up!</p>`;
         return;
     }
 
-    const aviso = overdues
-        ? `<div class="aviso-atraso">You have ${overdues} task${overdues > 1 ? "s" : ""} overdue${overdues > 1 ? "s" : ""}.</div>`
+    const aviso = atrasadas
+        ? `<div class="aviso-atraso">Você tem ${atrasadas} tarefa${atrasadas > 1 ? "s" : ""} atrasada${atrasadas > 1 ? "s" : ""}.</div>`
         : "";
 
     div.innerHTML = aviso + proximas.map(t => `
@@ -898,7 +898,7 @@ function atualizarDashboard(){
             <small>
                 ${esc(t.prioridade)}
             </small>
-            ${t.prazo ? "<br>" + etiquetaDeadline(t) : ""}
+            ${t.prazo ? "<br>" + etiquetaPrazo(t) : ""}
         </div>
     `).join("");
 }
@@ -909,7 +909,7 @@ function atualizarDashboard(){
 function salvarTudo(){
 
     const dados = {
-        tasks,
+        tarefas,
         agenda,
         notas,
         gastos,
@@ -928,12 +928,12 @@ function salvarTudo(){
 
 /* ================= DATA ================= */
 
-function mostrarDate(){
+function mostrarData(){
 
     const agora = new Date();
 
-    const texto = agora.toLocationeDateString(
-        "en-GB",
+    const texto = agora.toLocaleDateString(
+        "pt-BR",
         {
             weekday:"long",
             day:"numeric",
@@ -964,47 +964,47 @@ function esc(texto){
 
 
 /* ================= DATAS E PRAZOS ================= */
-function todayISO(){
+function hojeISO(){
     const d = new Date();
     return d.getFullYear() + "-" +
         String(d.getMonth() + 1).padStart(2,"0") + "-" +
         String(d.getDate()).padStart(2,"0");
 }
 
-function formatarDate(iso){
+function formatarData(iso){
     if(!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || "";
     const [a,m,d] = iso.split("-");
     return d + "/" + m + "/" + a;
 }
 
-function statusDeadline(t){
+function statusPrazo(t){
     if(!t.prazo || t.concluida) return "";
-    const today = todayISO();
-    if(t.prazo < today) return "overdue";
-    if(t.prazo === today) return "today";
+    const hoje = hojeISO();
+    if(t.prazo < hoje) return "atrasada";
+    if(t.prazo === hoje) return "hoje";
     return "";
 }
 
-function etiquetaDeadline(t){
+function etiquetaPrazo(t){
     if(!t.prazo) return "";
-    const s = statusDeadline(t);
-    const rotulo = s === "overdue" ? "Overdue • "
-                 : s === "today"     ? "⏰ Due today • "
-                 :                    "Deadline: ";
-    return `<span class="prazo ${s}">${rotulo}${formatarDate(t.prazo)}</span>`;
+    const s = statusPrazo(t);
+    const rotulo = s === "atrasada" ? "Overdue • "
+                 : s === "hoje"     ? "⏰ Due today • "
+                 :                    "Due: ";
+    return `<span class="prazo ${s}">${rotulo}${formatarData(t.prazo)}</span>`;
 }
 
-// Pendentes: overdues primeiro, depois as de today, depois por prazo
-function tasksPendentes(){
+// Pendentes: atrasadas primeiro, depois as de hoje, depois por prazo
+function tarefasPendentes(){
     const peso = t => {
-        const s = statusDeadline(t);
-        if(s === "overdue") return 0;
-        if(s === "today") return 1;
+        const s = statusPrazo(t);
+        if(s === "atrasada") return 0;
+        if(s === "hoje") return 1;
         if(t.prazo) return 2;
         return 3;
     };
 
-    return tasks
+    return tarefas
         .filter(t => !t.concluida)
         .sort((a,b) => {
             const d = peso(a) - peso(b);
@@ -1034,8 +1034,8 @@ function avisar(texto){
 
 /* ================= JANELA DE EDIÇÃO ================= */
 // campos: [{chave, label, tipo, opcoes, valor}]
-// aoSave(valores) pode devolver false para manter a janela aberta
-function abrirEditor(titulo, campos, aoSave){
+// aoSalvar(valores) pode devolver false para manter a janela aberta
+function abrirEditor(titulo, campos, aoSalvar){
     const fundo = document.createElement("div");
     fundo.className = "modal-fundo";
 
@@ -1106,7 +1106,7 @@ function abrirEditor(titulo, campos, aoSave){
     salvarBtn.onclick = () => {
         const valores = {};
         Object.keys(inputs).forEach(k => valores[k] = inputs[k].value.trim());
-        if(aoSave(valores) !== false) fechar();
+        if(aoSalvar(valores) !== false) fechar();
     };
 
     cancelar.onclick = fechar;
@@ -1123,15 +1123,15 @@ function abrirEditor(titulo, campos, aoSave){
     Object.values(inputs)[0].focus();
 }
 
-function editarTask(id){
-    const t = tasks.find(x => x.id === id);
+function editarTarefa(id){
+    const t = tarefas.find(x => x.id === id);
     if(!t) return;
 
     abrirEditor("Edit task", [
-        {chave:"texto", label:"Task", tipo:"textarea", valor:t.texto},
-        {chave:"prioridade", label:"Priority", tipo:"select",
-         opcoes:["Normal","Important","Urgent"], valor:t.prioridade},
-        {chave:"prazo", label:"Due date (optional)", tipo:"date", valor:t.prazo || ""}
+        {chave:"texto", label:"Tarefa", tipo:"textarea", valor:t.texto},
+        {chave:"prioridade", label:"Prioridade", tipo:"select",
+         opcoes:["Normal","Importante","Urgente"], valor:t.prioridade},
+        {chave:"prazo", label:"Prazo (opcional)", tipo:"date", valor:t.prazo || ""}
     ], v => {
         if(!v.texto){ alert("Enter a task."); return false; }
         t.texto = v.texto;
@@ -1147,10 +1147,10 @@ function editarEvento(id){
     if(!e) return;
 
     abrirEditor("Edit event", [
-        {chave:"nome", label:"Event", valor:e.nome},
-        {chave:"data", label:"Date", tipo:"date", valor:e.data},
-        {chave:"hora", label:"Time", tipo:"time", valor:e.hora || ""},
-        {chave:"local", label:"Location", valor:e.local || ""}
+        {chave:"nome", label:"Compromisso", valor:e.nome},
+        {chave:"data", label:"Data", tipo:"date", valor:e.data},
+        {chave:"hora", label:"Horário", tipo:"time", valor:e.hora || ""},
+        {chave:"local", label:"Local", valor:e.local || ""}
     ], v => {
         if(!v.nome || !v.data){ alert("Enter the event and date."); return false; }
         e.nome = v.nome;
@@ -1167,8 +1167,8 @@ function editarNota(id){
     if(!n) return;
 
     abrirEditor("Edit note", [
-        {chave:"titulo", label:"Title", valor:n.titulo},
-        {chave:"texto", label:"Text", tipo:"textarea", valor:n.texto}
+        {chave:"titulo", label:"Título", valor:n.titulo},
+        {chave:"texto", label:"Texto", tipo:"textarea", valor:n.texto}
     ], v => {
         if(!v.titulo || !v.texto){ alert("Please enter a title and text."); return false; }
         n.titulo = v.titulo;
@@ -1183,19 +1183,19 @@ function editarGasto(id){
     if(!g) return;
 
     abrirEditor("Edit expense", [
-        {chave:"descricao", label:"Description", valor:g.descricao},
-        {chave:"valor", label:"Amount", tipo:"number", valor:g.valor},
-        {chave:"categoria", label:"Category", tipo:"select",
+        {chave:"descricao", label:"Descrição", valor:g.descricao},
+        {chave:"valor", label:"Valor", tipo:"number", valor:g.valor},
+        {chave:"categoria", label:"Categoria", tipo:"select",
          opcoes:["Food","Transportation","Home","Studies","Leisure","Shopping","Other"],
          valor:g.categoria}
     ], v => {
-        const novoAmount = Number(v.valor);
-        if(!v.descricao || !novoAmount || novoAmount <= 0){
+        const novoValor = Number(v.valor);
+        if(!v.descricao || !novoValor || novoValor <= 0){
             alert("Enter a description and amount.");
             return false;
         }
         g.descricao = v.descricao;
-        g.valor = novoAmount;
+        g.valor = novoValor;
         g.categoria = v.categoria;
         salvarTudo();
         renderizar();
@@ -1206,8 +1206,8 @@ function editarCompra(id){
     const c = compras.find(x => x.id === id);
     if(!c) return;
 
-    abrirEditor("Edit item", [
-        {chave:"produto", label:"Product", valor:c.produto}
+    abrirEditor("Editar item", [
+        {chave:"produto", label:"Produto", valor:c.produto}
     ], v => {
         if(!v.produto){ alert("Enter a product."); return false; }
         c.produto = v.produto;
@@ -1218,7 +1218,7 @@ function editarCompra(id){
 
 /* ================= GRÁFICO DE GASTOS ================= */
 function renderGrafico(){
-    const div = $("graficoExpenses");
+    const div = $("graficoGastos");
     if(!div) return;
 
     if(!gastos.length){
@@ -1226,15 +1226,15 @@ function renderGrafico(){
         return;
     }
 
-    const porCategory = {};
+    const porCategoria = {};
     gastos.forEach(g => {
-        porCategory[g.categoria] =
-            (porCategory[g.categoria] || 0) + Number(g.valor);
+        porCategoria[g.categoria] =
+            (porCategoria[g.categoria] || 0) + Number(g.valor);
     });
 
-    const total = Object.values(porCategory).reduce((a,b) => a + b, 0);
+    const total = Object.values(porCategoria).reduce((a,b) => a + b, 0);
 
-    div.innerHTML = Object.entries(porCategory)
+    div.innerHTML = Object.entries(porCategoria)
         .sort((a,b) => b[1] - a[1])
         .map(([categoria, soma]) => {
             const pct = total ? (soma / total * 100) : 0;
@@ -1261,7 +1261,7 @@ function aplicarTema(){
 
     document.body.classList.toggle("dark", escuro);
 
-    // Atualiza os interruptores ON/OFF (menu e página Account)
+    // Atualiza os interruptores ON/OFF (menu e página Conta)
     document.querySelectorAll(".switch").forEach(b => {
         b.setAttribute("aria-checked", escuro ? "true" : "false");
     });
@@ -1287,18 +1287,18 @@ function celulaCSV(v){
 
 function exportarCSV(){
     const grupos = [
-        ["Tasks", tasks],
-        ["Calendar", agenda],
-        ["Notes", notas],
-        ["Expenses", gastos],
+        ["Tarefas", tarefas],
+        ["Agenda", agenda],
+        ["Notas", notas],
+        ["Gastos", gastos],
         ["Shopping", compras],
         ["Studies", estudos],
-        ["Works", trabalhos]
+        ["Trabalhos", trabalhos]
     ];
 
     const linhas = [];
 
-    linhas.push(celulaCSV("Income") + ";" + celulaCSV(renda));
+    linhas.push(celulaCSV("Renda") + ";" + celulaCSV(renda));
     linhas.push("");
 
     grupos.forEach(([nome, lista]) => {
@@ -1338,7 +1338,7 @@ function exportarCSV(){
 }
 
 /* ================= ALTERAR SENHA ================= */
-async function trocarPassword(){
+async function trocarSenha(){
     const atual = $("senhaAtual").value;
     const nova = $("senhaNova").value;
     const confirmar = $("senhaConfirmar").value;
@@ -1373,7 +1373,7 @@ async function trocarPassword(){
         const resposta = await r.json();
 
         if(resposta.ok){
-            alert("Password alterada com sucesso!");
+            alert("Password changed successfully!");
             limpar("senhaAtual","senhaNova","senhaConfirmar");
         } else {
             alert(resposta.mensagem || "Unable to change the password.");
@@ -1387,6 +1387,6 @@ async function trocarPassword(){
 
 aplicarTema();
 carregarPerfil();
-mostrarDate();
+mostrarData();
 atualizarSaudacao();
 renderizar();
