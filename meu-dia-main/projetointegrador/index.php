@@ -128,7 +128,7 @@ window.MEUDIA = {
 
         <div class="card">
             <div class="card-icon"><svg class="ico" aria-hidden="true"><use href="#i-notas"/></svg></div>
-            <h3>Anotações</h3>
+            <h3>Notes</h3>
             <p id="totalNotas" class="stat">0</p>
             <p>saved notes</p>
         </div>
@@ -198,7 +198,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarTarefa()">
-            Adicionar tarefa
+            Add task
         </button>
     </div>
 
@@ -247,7 +247,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarEvento()">
-            Adicionar compromisso
+            Add event
         </button>
     </div>
 
@@ -281,7 +281,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarNota()">
-            Salvar anotação
+            Save note
         </button>
 
     </div>
@@ -351,7 +351,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="salvarRenda()">
-            Salvar renda
+            Save income
         </button>
 
     </div>
@@ -394,7 +394,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarGasto()">
-            Adicionar gasto
+            Add expense
         </button>
 
     </div>
@@ -468,7 +468,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarEstudo()">
-            Adicionar atividade
+            Add assignment
         </button>
 
     </div>
@@ -514,7 +514,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarTrabalho()">
-            Adicionar atividade
+            Add assignment
         </button>
 
     </div>
@@ -631,7 +631,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="salvarPerfil()">
-            Salvar perfil
+            Save profile
         </button>
 
     </div>
@@ -705,7 +705,7 @@ window.MEUDIA = {
     <strong>MeuDia+</strong>
     <br><br>
     Organize tasks, studies, work, and your finances
-    em um só lugar.
+    in one place.
     <br><br>
     © 2026 MeuDia+
 </footer>
