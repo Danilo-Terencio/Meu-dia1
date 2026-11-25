@@ -22,7 +22,7 @@ try {
 } catch (PDOException $e) {
     error_log("MeuDia+ | Erro ao carregar dados do usuário: " . $e->getMessage());
     http_response_code(500);
-    die("Não foi possível carregar seus dados agora. Tente novamente mais tarde.");
+    die("Unable to load your data right now. Please try again later.");
 }
 
 $vCss = filemtime(__DIR__ . '/painel.css');
