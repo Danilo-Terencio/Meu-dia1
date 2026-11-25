@@ -42,18 +42,18 @@ const salvar = (chave, dados) => {
     })
     .then(r => {
         if (r.status === 401) {
-            alert("Sua sessão expirou. Faça login novamente.");
+            alert("Your session has expired. Please log in again.");
             window.location.href = "login.php";
             return;
         }
         if (!r.ok) {
             delete ultimoSalvo[chave];
-            avisar("Não foi possível salvar. Tente novamente.");
+            avisar("Unable to save. Please try again.");
         }
     })
     .catch(() => {
         delete ultimoSalvo[chave];
-        avisar("Sem conexão com o servidor. Suas alterações podem não ter sido salvas.");
+        avisar("No connection to the server. Your changes may not have been saved.");
     });
 };
 
@@ -205,7 +205,7 @@ function adicionarNota(){
         id:Date.now(),
         titulo,
         texto,
-        data:new Date().toLocaleDateString("pt-BR")
+        data:new Date().toLocaleDateString("en-GB")
     });
 
     salvarTudo();
@@ -259,7 +259,7 @@ function adicionarGasto(){
         descricao,
         valor:valorGasto,
         categoria,
-        data:new Date().toLocaleDateString("pt-BR")
+        data:new Date().toLocaleDateString("en-GB")
     });
 
     salvarTudo();
@@ -279,7 +279,7 @@ function removerGasto(id){
 
 /* ================= COMPRAS ================= */
 
-function adicionarCompra(){
+function adicionarShopping item(){
 
     const produto = valor("produtoInput");
 
@@ -299,7 +299,7 @@ function adicionarCompra(){
     renderizar();
 }
 
-function marcarCompra(id){
+function marcarShopping item(id){
 
     const item = compras.find(c => c.id === id);
 
@@ -309,7 +309,7 @@ function marcarCompra(id){
     renderizar();
 }
 
-function removerCompra(id){
+function removerShopping item(id){
     if(!confirm("Are you sure you want to delete this item?")) return;
 
     compras = compras.filter(c => c.id !== id);
@@ -321,11 +321,11 @@ function removerCompra(id){
 
 /* ================= ESTUDOS ================= */
 
-function adicionarEstudo(){
+function adicionarStudy item(){
 
     const materia = valor("materia");
     const atividade = valor("atividade");
-    const data = $("dataEstudo").value;
+    const data = $("dataStudy item").value;
 
     if(!materia || !atividade){
         alert("Please enter a subject and an assignment.");
@@ -345,13 +345,13 @@ function adicionarEstudo(){
     limpar(
         "materia",
         "atividade",
-        "dataEstudo"
+        "dataStudy item"
     );
 
     renderizar();
 }
 
-function concluirEstudo(id){
+function concluirStudy item(id){
 
     const item = estudos.find(e => e.id === id);
 
@@ -361,7 +361,7 @@ function concluirEstudo(id){
     renderizar();
 }
 
-function removerEstudo(id){
+function removerStudy item(id){
     if(!confirm("Are you sure you want to delete this item?")) return;
 
     estudos = estudos.filter(e => e.id !== id);
@@ -561,8 +561,8 @@ function renderizar(){
     renderAgenda();
     renderNotas();
     renderFinancas();
-    renderCompras();
-    renderEstudos();
+    renderShopping items();
+    renderStudy items();
     renderTrabalho();
     atualizarDashboard();
 }
@@ -589,16 +589,16 @@ function renderTarefas(){
                 <div>
                     <strong class="texto-multi ${t.concluida ? "concluida" : ""}">${esc(t.texto)}</strong>
                     <br>
-                    <small>Prioridade: ${esc(t.prioridade)}</small>
+                    <small>Priority: ${esc(t.prioridade)}</small>
                     ${t.prazo ? "<br>" + etiquetaPrazo(t) : ""}
                 </div>
             </div>
             <div class="item-actions">
                 <button class="btn btn-secondary" onclick="editarTarefa(${t.id})">
-                    Editar
+                    Edit
                 </button>
                 <button class="btn btn-danger" onclick="removerTarefa(${t.id})">
-                    Excluir
+                    Delete
                 </button>
             </div>
         </div>
@@ -633,10 +633,10 @@ function renderAgenda(){
             </div>
             <div class="item-actions">
                 <button class="btn btn-secondary" onclick="editarEvento(${e.id})">
-                    Editar
+                    Edit
                 </button>
                 <button class="btn btn-danger" onclick="removerEvento(${e.id})">
-                    Excluir
+                    Delete
                 </button>
             </div>
         </div>
@@ -665,10 +665,10 @@ function renderNotas(){
             </div>
             <div class="item-actions">
                 <button class="btn btn-secondary" onclick="editarNota(${n.id})">
-                    Editar
+                    Edit
                 </button>
                 <button class="btn btn-danger" onclick="removerNota(${n.id})">
-                    Excluir
+                    Delete
                 </button>
             </div>
         </div>
@@ -718,10 +718,10 @@ function renderFinancas(){
                 </strong>
                 <div class="item-actions" style="margin-top:5px">
                     <button class="btn btn-secondary" onclick="editarGasto(${g.id})">
-                        Editar
+                        Edit
                     </button>
                     <button class="btn btn-danger" onclick="removerGasto(${g.id})">
-                        Excluir
+                        Delete
                     </button>
                 </div>
             </div>
@@ -732,8 +732,8 @@ function renderFinancas(){
 
 /* ================= RENDER COMPRAS ================= */
 
-function renderCompras(){
-    const div = $("listaCompras");
+function renderShopping items(){
+    const div = $("listaShopping items");
 
     if(!compras.length){
         div.innerHTML = `<p class="vazio">Your list is empty.</p>`;
@@ -746,17 +746,17 @@ function renderCompras(){
                 <input
                     type="checkbox"
                     ${c.comprado ? "checked" : ""}
-                    onchange="marcarCompra(${c.id})">
+                    onchange="marcarShopping item(${c.id})">
                 <span class="${c.comprado ? "concluida" : ""}">
                     ${esc(c.produto)}
                 </span>
             </label>
             <div class="item-actions">
-                <button class="editar" onclick="editarCompra(${c.id})">
-                    Editar
+                <button class="editar" onclick="editarShopping item(${c.id})">
+                    Edit
                 </button>
-                <button onclick="removerCompra(${c.id})">
-                    Excluir
+                <button onclick="removerShopping item(${c.id})">
+                    Delete
                 </button>
             </div>
         </div>
@@ -766,9 +766,9 @@ function renderCompras(){
 
 /* ================= RENDER ESTUDOS ================= */
 
-function renderEstudos(){
+function renderStudy items(){
 
-    const div = $("listaEstudos");
+    const div = $("listaStudy items");
 
     if(!estudos.length){
         div.innerHTML =
@@ -785,7 +785,7 @@ function renderEstudos(){
                     class="check"
                     type="checkbox"
                     ${e.concluida ? "checked" : ""}
-                    onchange="concluirEstudo(${e.id})">
+                    onchange="concluirStudy item(${e.id})">
 
                 <div>
 
@@ -797,7 +797,7 @@ function renderEstudos(){
 
                     <small>
                         ${esc(e.atividade)}
-                        ${e.data ? " • Entrega: " + e.data : ""}
+                        ${e.data ? " • Due: " + e.data : ""}
                     </small>
 
                 </div>
@@ -806,8 +806,8 @@ function renderEstudos(){
 
             <button
                 class="btn btn-danger"
-                onclick="removerEstudo(${e.id})">
-                Excluir
+                onclick="removerStudy item(${e.id})">
+                Delete
             </button>
 
         </div>
@@ -824,7 +824,7 @@ function renderTrabalho(){
     if(!trabalhos.length){
         div.innerHTML =
             `<p class="vazio">
-                Nenhuma atividade profissional cadastrada.
+                No work activities added yet.
             </p>`;
         return;
     }
@@ -860,7 +860,7 @@ function renderTrabalho(){
             <button
                 class="btn btn-danger"
                 onclick="removerTrabalho(${t.id})">
-                Excluir
+                Delete
             </button>
 
         </div>
@@ -873,11 +873,11 @@ function renderTrabalho(){
 function atualizarDashboard(){
     $("totalTarefas").textContent = tarefas.length;
     $("totalAgenda").textContent = agenda.length;
-    $("totalCompras").textContent = compras.length;
+    $("totalShopping items").textContent = compras.length;
     $("totalNotas").textContent = notas.length;
 
     const pendentes = tarefasPendentes();
-    const atrasadas = pendentes.filter(t => statusPrazo(t) === "atrasada").length;
+    const overdues = pendentes.filter(t => statusPrazo(t) === "atrasada").length;
     const proximas = pendentes.slice(0,5);
 
     const div = $("resumoTarefas");
@@ -887,8 +887,8 @@ function atualizarDashboard(){
         return;
     }
 
-    const aviso = atrasadas
-        ? `<div class="aviso-atraso">Você tem ${atrasadas} tarefa${atrasadas > 1 ? "s" : ""} atrasada${atrasadas > 1 ? "s" : ""}.</div>`
+    const aviso = overdues
+        ? `<div class="aviso-atraso">You have ${atrasadas} tarefa${atrasadas > 1 ? "s" : ""} overdue${atrasadas > 1 ? "s" : ""}.</div>`
         : "";
 
     div.innerHTML = aviso + proximas.map(t => `
@@ -933,7 +933,7 @@ function mostrarData(){
     const agora = new Date();
 
     const texto = agora.toLocaleDateString(
-        "pt-BR",
+        "en-GB",
         {
             weekday:"long",
             day:"numeric",
@@ -994,7 +994,7 @@ function etiquetaPrazo(t){
     return `<span class="prazo ${s}">${rotulo}${formatarData(t.prazo)}</span>`;
 }
 
-// Pendentes: atrasadas primeiro, depois as de hoje, depois por prazo
+// Pendentes: overdues primeiro, depois as de hoje, depois por prazo
 function tarefasPendentes(){
     const peso = t => {
         const s = statusPrazo(t);
@@ -1034,8 +1034,8 @@ function avisar(texto){
 
 /* ================= JANELA DE EDIÇÃO ================= */
 // campos: [{chave, label, tipo, opcoes, valor}]
-// aoSalvar(valores) pode devolver false para manter a janela aberta
-function abrirEditor(titulo, campos, aoSalvar){
+// aoSave(valores) pode devolver false para manter a janela aberta
+function abrirEditor(titulo, campos, aoSave){
     const fundo = document.createElement("div");
     fundo.className = "modal-fundo";
 
@@ -1106,7 +1106,7 @@ function abrirEditor(titulo, campos, aoSalvar){
     salvarBtn.onclick = () => {
         const valores = {};
         Object.keys(inputs).forEach(k => valores[k] = inputs[k].value.trim());
-        if(aoSalvar(valores) !== false) fechar();
+        if(aoSave(valores) !== false) fechar();
     };
 
     cancelar.onclick = fechar;
@@ -1202,11 +1202,11 @@ function editarGasto(id){
     });
 }
 
-function editarCompra(id){
+function editarShopping item(id){
     const c = compras.find(x => x.id === id);
     if(!c) return;
 
-    abrirEditor("Editar item", [
+    abrirEditor("Edit item", [
         {chave:"produto", label:"Produto", valor:c.produto}
     ], v => {
         if(!v.produto){ alert("Enter a product."); return false; }
