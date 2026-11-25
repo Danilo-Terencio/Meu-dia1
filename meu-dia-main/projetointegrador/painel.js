@@ -270,7 +270,7 @@ function adicionarGasto(){
         descricao,
         valor:valorGasto,
         categoria,
-        data:new Date().toLocaleDateString("pt-BR")
+        data:new Date().toLocaleDateString("en-GB")
     });
 
     salvarTudo();
@@ -944,7 +944,7 @@ function mostrarData(){
     const agora = new Date();
 
     const texto = agora.toLocaleDateString(
-        "pt-BR",
+        "en-GB",
         {
             weekday:"long",
             day:"numeric",
@@ -1142,7 +1142,7 @@ function editarTarefa(id){
     abrirEditor("Edit task", [
         {chave:"texto", label:"Task", tipo:"textarea", valor:t.texto},
         {chave:"prioridade", label:"Priority", tipo:"select",
-         opcoes:["Normal","Importante","Urgente"], valor:t.prioridade},
+         opcoes:["Normal","Important","Urgent"], valor:t.prioridade},
         {chave:"prazo", label:"Due date (optional)", tipo:"date", valor:t.prazo || ""}
     ], v => {
         if(!v.texto){ alert("Enter a task."); return false; }
@@ -1326,7 +1326,14 @@ function exportarCSV(){
         });
 
         linhas.push(celulaCSV(nome));
-        linhas.push(colunas.map(celulaCSV).join(";"));
+        const nomesColunas = {
+            texto:"Task", prioridade:"Priority", prazo:"Due date", concluida:"Completed",
+            nome:"Event", data:"Date", hora:"Time", local:"Location",
+            titulo:"Title", descricao:"Description", valor:"Amount", categoria:"Category",
+            produto:"Product", comprado:"Purchased", materia:"Subject",
+            atividade:"Assignment", obs:"Notes"
+        };
+        linhas.push(colunas.map(c => celulaCSV(nomesColunas[c] || c)).join(";"));
 
         lista.forEach(item => {
             linhas.push(colunas.map(c => celulaCSV(item ? item[c] : "")).join(";"));
