@@ -34,7 +34,7 @@ $flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeuDia+ | Organize sua vida</title>
+<title>MeuDia+ | Organize your life</title>
 <link rel="stylesheet" href="painel.css?v=<?= $vCss ?>">
 <script>
 window.MEUDIA = {
@@ -90,15 +90,15 @@ window.MEUDIA = {
         <h2 id="saudacao">Hello!</h2>
 
         <p>
-            Tenha suas principais atividades, events,
-            anotações e finanças organizados in one place.
+            Keep your main activities, events,
+            notes, and finances organized in one place.
         </p>
 
         <div class="data-atual" id="dataAtual"></div>
 
         <div class="search">
             <input id="buscaGeral"
-                   placeholder="Search tasks, notes, shopping...">
+                   placeholder="Search tasks, notes, and shopping...">
             <button onclick="buscarTudo()">Search</button>
         </div>
     </div>
@@ -108,28 +108,28 @@ window.MEUDIA = {
         <div class="card">
             <div class="card-icon"><svg class="ico" aria-hidden="true"><use href="#i-tarefas"/></svg></div>
             <h3>Tasks</h3>
-            <p id="totalTasks" class="stat">0</p>
+            <p id="totalTarefas" class="stat">0</p>
             <p>tasks created</p>
         </div>
 
         <div class="card">
             <div class="card-icon"><svg class="ico" aria-hidden="true"><use href="#i-agenda"/></svg></div>
             <h3>Calendar</h3>
-            <p id="totalCalendar" class="stat">0</p>
+            <p id="totalAgenda" class="stat">0</p>
             <p>events</p>
         </div>
 
         <div class="card">
             <div class="card-icon"><svg class="ico" aria-hidden="true"><use href="#i-compras"/></svg></div>
             <h3>Shopping</h3>
-            <p id="totalShopping" class="stat">0</p>
+            <p id="totalCompras" class="stat">0</p>
             <p>items on your list</p>
         </div>
 
         <div class="card">
             <div class="card-icon"><svg class="ico" aria-hidden="true"><use href="#i-notas"/></svg></div>
             <h3>Anotações</h3>
-            <p id="totalNotes" class="stat">0</p>
+            <p id="totalNotas" class="stat">0</p>
             <p>saved notes</p>
         </div>
 
@@ -139,24 +139,24 @@ window.MEUDIA = {
 
         <div class="box">
             <h2>Upcoming tasks</h2>
-            <div id="resumoTasks"></div>
+            <div id="resumoTarefas"></div>
         </div>
 
         <div class="box">
             <h2>Financial summary</h2>
 
             <p>Income:</p>
-            <strong id="dashIncome">R$ 0,00</strong>
+            <strong id="dashRenda">R$ 0,00</strong>
 
             <br><br>
 
             <p>Expenses:</p>
-            <strong id="dashExpenses">R$ 0,00</strong>
+            <strong id="dashGastos">R$ 0,00</strong>
 
             <br><br>
 
-            <p>Balance:</p>
-            <strong id="dashBalance">R$ 0,00</strong>
+            <p>Balance</p>
+            <strong id="dashSaldo">R$ 0,00</strong>
         </div>
 
     </div>
@@ -176,13 +176,13 @@ window.MEUDIA = {
 
             <div>
                 <label>Task</label>
-                <textarea id="tarefaText" class="tarefa-texto"
-                          placeholder="E.g.: Complete a school assignment (press Enter to add a new line)"></textarea>
+                <textarea id="tarefaTexto" class="tarefa-texto"
+                          placeholder="E.g.: Complete a school assignment (press Enter for a new line)"></textarea>
             </div>
 
             <div>
                 <label>Priority</label>
-                <select id="tarefaPriority">
+                <select id="tarefaPrioridade">
                     <option>Normal</option>
                     <option>Important</option>
                     <option>Urgent</option>
@@ -190,21 +190,21 @@ window.MEUDIA = {
             </div>
             <div>
                 <label>Due date (optional)</label>
-                <input id="tarefaDeadline" type="date">
+                <input id="tarefaPrazo" type="date">
             </div>
 
         </div>
 
         <button class="btn"
                 style="margin-top:15px"
-                onclick="adicionarTask()">
-            Add task
+                onclick="adicionarTarefa()">
+            Adicionar tarefa
         </button>
     </div>
 
     <div class="box">
         <h2>List</h2>
-        <div id="listaTasks"></div>
+        <div id="listaTarefas"></div>
     </div>
 
 </section>
@@ -214,7 +214,7 @@ window.MEUDIA = {
 
     <div class="titulo">
         <h2>My calendar</h2>
-        <p>Cadastre seus events.</p>
+        <p>Add your events.</p>
     </div>
 
     <div class="box">
@@ -222,13 +222,13 @@ window.MEUDIA = {
 
             <div>
                 <label>Event</label>
-                <input id="eventoName"
+                <input id="eventoNome"
                        placeholder="E.g.: Doctor's appointment">
             </div>
 
             <div>
                 <label>Date</label>
-                <input id="eventoDate" type="date">
+                <input id="eventoData" type="date">
             </div>
 
             <div>
@@ -238,7 +238,7 @@ window.MEUDIA = {
 
             <div>
                 <label>Location</label>
-                <input id="eventoLocation"
+                <input id="eventoLocal"
                        placeholder="E.g.: Downtown">
             </div>
 
@@ -247,13 +247,13 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarEvento()">
-            Add compromisso
+            Adicionar compromisso
         </button>
     </div>
 
     <div class="box">
-        <h2>Meus events</h2>
-        <div id="listaCalendar"></div>
+        <h2>My events</h2>
+        <div id="listaAgenda"></div>
     </div>
 
 </section>
@@ -270,25 +270,25 @@ window.MEUDIA = {
 
         <label>Title</label>
         <input id="notaTitulo"
-               placeholder="Title da anotação">
+               placeholder="Note title">
 
         <br><br>
 
         <label>Text</label>
-        <textarea id="notaText"
+        <textarea id="notaTexto"
                   placeholder="Write here..."></textarea>
 
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarNota()">
-            Save note
+            Salvar anotação
         </button>
 
     </div>
 
     <div class="box">
         <h2>Saved notes</h2>
-        <div id="listaNotes"></div>
+        <div id="listaNotas"></div>
     </div>
 
 </section>
@@ -305,21 +305,21 @@ window.MEUDIA = {
 
         <div class="finance-card">
             <h3>Income</h3>
-            <div id="rendaAmount" class="finance-value entrada">
+            <div id="rendaValor" class="finance-value entrada">
                 R$ 0,00
             </div>
         </div>
 
         <div class="finance-card">
             <h3>Expenses</h3>
-            <div id="gastosAmount" class="finance-value saida">
+            <div id="gastosValor" class="finance-value saida">
                 R$ 0,00
             </div>
         </div>
 
         <div class="finance-card">
             <h3>Balance</h3>
-            <div id="saldoAmount" class="finance-value saldo">
+            <div id="saldoValor" class="finance-value saldo">
                 R$ 0,00
             </div>
         </div>
@@ -342,7 +342,7 @@ window.MEUDIA = {
 
             <div>
                 <label>Source</label>
-                <input id="rendaSource"
+                <input id="rendaFonte"
                        placeholder="E.g.: Salary">
             </div>
 
@@ -350,8 +350,8 @@ window.MEUDIA = {
 
         <button class="btn"
                 style="margin-top:15px"
-                onclick="salvarIncome()">
-            Save renda
+                onclick="salvarRenda()">
+            Salvar renda
         </button>
 
     </div>
@@ -370,7 +370,7 @@ window.MEUDIA = {
 
             <div>
                 <label>Amount</label>
-                <input id="gastoAmount"
+                <input id="gastoValor"
                        type="number"
                        step="0.01"
                        placeholder="E.g.: 100">
@@ -378,7 +378,7 @@ window.MEUDIA = {
 
             <div>
                 <label>Category</label>
-                <select id="gastoCategory">
+                <select id="gastoCategoria">
                     <option>Food</option>
                     <option>Transportation</option>
                     <option>Home</option>
@@ -394,19 +394,19 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarGasto()">
-            Add expense
+            Adicionar gasto
         </button>
 
     </div>
 
     <div class="box">
-        <h2>Expenses por categoria</h2>
-        <div id="graficoExpenses"></div>
+        <h2>Expenses by category</h2>
+        <div id="graficoGastos"></div>
     </div>
 
     <div class="box">
         <h2>Expense history</h2>
-        <div id="listaExpenses"></div>
+        <div id="listaGastos"></div>
     </div>
 
 </section>
@@ -415,7 +415,7 @@ window.MEUDIA = {
 <section id="compras" class="page">
 
     <div class="titulo">
-        <h2>List de compras</h2>
+        <h2>Shopping list</h2>
         <p>Don't forget what you need to buy.</p>
     </div>
 
@@ -429,7 +429,7 @@ window.MEUDIA = {
 
     <div class="box">
         <h2>My list</h2>
-        <div id="listaShopping"></div>
+        <div id="listaCompras"></div>
     </div>
 
 </section>
@@ -459,7 +459,7 @@ window.MEUDIA = {
             </div>
 
             <div>
-                <label>Date de entrega</label>
+                <label>Due date</label>
                 <input id="dataEstudo" type="date">
             </div>
 
@@ -468,14 +468,14 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="adicionarEstudo()">
-            Add atividade
+            Adicionar atividade
         </button>
 
     </div>
 
     <div class="box">
         <h2>Assignments</h2>
-        <div id="listaStudies"></div>
+        <div id="listaEstudos"></div>
     </div>
 
 </section>
@@ -493,14 +493,14 @@ window.MEUDIA = {
         <div class="form-grid">
 
             <div>
-                <label>Task profissional</label>
-                <input id="trabalhoText"
+                <label>Work task</label>
+                <input id="trabalhoTexto"
                        placeholder="E.g.: Submit a report">
             </div>
 
             <div>
                 <label>Deadline</label>
-                <input id="trabalhoDate" type="date">
+                <input id="trabalhoData" type="date">
             </div>
 
             <div class="full">
@@ -513,15 +513,15 @@ window.MEUDIA = {
 
         <button class="btn"
                 style="margin-top:15px"
-                onclick="adicionarWork()">
-            Add atividade
+                onclick="adicionarTrabalho()">
+            Adicionar atividade
         </button>
 
     </div>
 
     <div class="box">
-        <h2>Assignments profissionais</h2>
-        <div id="listaWork"></div>
+        <h2>Work activities</h2>
+        <div id="listaTrabalho"></div>
     </div>
 
 </section>
@@ -542,7 +542,7 @@ window.MEUDIA = {
         <div class="emergencia">
             <div class="emergencia-icon"><svg class="ico" aria-hidden="true"><use href="#i-policia"/></svg></div>
             <h3>Police</h3>
-            <p>Emergencys policiais.</p>
+            <p>Police emergencies.</p>
             <a class="ligar" href="tel:190">Call 190</a>
         </div>
 
@@ -563,7 +563,7 @@ window.MEUDIA = {
         <div class="emergencia">
             <div class="emergencia-icon"><svg class="ico" aria-hidden="true"><use href="#i-rodovia"/></svg></div>
             <h3>Federal Highway Police</h3>
-            <p>Emergencys em rodovias federais.</p>
+            <p>Emergencies on federal highways.</p>
             <a class="ligar" href="tel:191">Call 191</a>
         </div>
 
@@ -598,13 +598,13 @@ window.MEUDIA = {
 
             <div>
                 <label>Name</label>
-                <input id="perfilName"
-                       placeholder="Seu nome">
+                <input id="perfilNome"
+                       placeholder="Your name">
             </div>
 
             <div>
                 <label>City</label>
-                <input id="perfilCity"
+                <input id="perfilCidade"
                        placeholder="Your city">
             </div>
 
@@ -616,7 +616,7 @@ window.MEUDIA = {
 
             <div>
                 <label>Goal</label>
-                <input id="perfilGoal"
+                <input id="perfilObjetivo"
                        placeholder="E.g.: Organize my routine">
             </div>
 
@@ -631,7 +631,7 @@ window.MEUDIA = {
         <button class="btn"
                 style="margin-top:15px"
                 onclick="salvarPerfil()">
-            Save perfil
+            Salvar perfil
         </button>
 
     </div>
@@ -660,7 +660,7 @@ window.MEUDIA = {
         <h2>Change password</h2>
         <div class="form-grid">
             <div class="full">
-                <label>Password atual</label>
+                <label>Current password</label>
                 <input id="senhaAtual" type="password" autocomplete="current-password">
             </div>
             <div>
@@ -672,14 +672,14 @@ window.MEUDIA = {
                 <input id="senhaConfirmar" type="password" minlength="6" maxlength="72" autocomplete="new-password">
             </div>
         </div>
-        <button class="btn" style="margin-top:15px" onclick="trocarPassword()">Change password</button>
+        <button class="btn" style="margin-top:15px" onclick="trocarSenha()">Change password</button>
     </div>
 
     <div class="box">
         <h2>Export my data</h2>
         <p class="descricao">
             Download your tasks, calendar, notes, expenses, and shopping list as a CSV file
-            (abre no Excel ou no Google Planilhas).
+            (opens in Excel or Google Sheets).
         </p>
         <button class="btn" onclick="exportarCSV()">Download CSV</button>
     </div>
@@ -704,8 +704,8 @@ window.MEUDIA = {
 <footer>
     <strong>MeuDia+</strong>
     <br><br>
-    Organize tasks, estudos, trabalho e sua vida financeira
-    in one place.
+    Organize tasks, studies, work, and your finances
+    em um só lugar.
     <br><br>
     © 2026 MeuDia+
 </footer>
