@@ -1,0 +1,12 @@
+/* MeuDia+ | animação de transição entre páginas (círculo azul que se expande) */
+.md-transicao{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#2563eb,#4f46e5);clip-path:circle(0% at var(--x,50%) var(--y,50%));pointer-events:all}
+.md-transicao .md-logo{width:150px;background:#fff;border-radius:24px;padding:8px 14px;opacity:0;transform:scale(.8);
+  transition:opacity .3s .3s,transform .4s .3s;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.md-transicao .md-logo img{width:100%;display:block}
+.md-transicao.cobrir,.md-transicao.cheio{clip-path:circle(150% at var(--x,50%) var(--y,50%))}
+.md-transicao.cobrir{transition:clip-path .65s cubic-bezier(.7,0,.3,1)}
+.md-transicao.cobrir .md-logo,.md-transicao.cheio .md-logo{opacity:1;transform:scale(1)}
+.md-transicao.saindo{clip-path:circle(0% at var(--x,50%) var(--y,50%));transition:clip-path .7s cubic-bezier(.7,0,.3,1) .15s}
+.md-transicao.saindo .md-logo{opacity:0;transition:opacity .2s}
+html.md-chegando::before{content:"";position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#2563eb,#4f46e5)}

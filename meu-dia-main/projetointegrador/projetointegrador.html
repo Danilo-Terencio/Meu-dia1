@@ -1,0 +1,1019 @@
+ 
+<!DOCTYPE html>
+<html lang="pt-BR">
+ 
+<head>
+    <meta charset="UTF-8">
+ 
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+ 
+    <!-- LIGAÇÃO COM O CSS -->
+    <link rel="stylesheet" href="style.css">
+ 
+    <title>MeuDia+ | Organize sua vida</title>
+</head>
+ 
+<body>
+ 
+    <!-- CABEÇALHO -->
+    <header>
+ 
+        <div class="logo">
+ 
+            <div class="logo-icon">
+                +
+            </div>
+ 
+            <div>
+                <h1>MeuDia+</h1>
+                <p>Organize sua vida em um só lugar</p>
+            </div>
+ 
+        </div>
+ 
+        <!-- MENU -->
+        <nav>
+ 
+            <button class="active"
+                onclick="abrirPagina('inicio', this)">
+                🏠 Início
+            </button>
+ 
+            <button onclick="abrirPagina('tarefas', this)">
+                ✅ Tarefas
+            </button>
+ 
+            <button onclick="abrirPagina('agenda', this)">
+                📅 Agenda
+            </button>
+ 
+            <button onclick="abrirPagina('notas', this)">
+                📝 Notas
+            </button>
+ 
+            <button onclick="abrirPagina('financas', this)">
+                💰 Finanças
+            </button>
+ 
+            <button onclick="abrirPagina('compras', this)">
+                🛒 Compras
+            </button>
+ 
+            <button onclick="abrirPagina('estudos', this)">
+                📚 Estudos
+            </button>
+ 
+            <button onclick="abrirPagina('trabalho', this)">
+                💼 Trabalho
+            </button>
+ 
+            <button onclick="abrirPagina('emergencia', this)">
+                🚨 Emergência
+            </button>
+ 
+            <button onclick="abrirPagina('perfil', this)">
+                👤 Perfil
+            </button>
+ 
+        </nav>
+ 
+    </header>
+ 
+ 
+    <main class="container">
+ 
+        <!-- INÍCIO -->
+        <section id="inicio" class="page active">
+ 
+            <div class="hero">
+ 
+                <h2>Olá! 👋</h2>
+ 
+                <p>
+                    Organize suas tarefas, compromissos,
+                    estudos, trabalho e finanças em um só lugar.
+                </p>
+ 
+                <div class="data-atual">
+                    📅 Hoje
+                </div>
+ 
+                <div class="search">
+ 
+                    <input
+                        type="text"
+                        placeholder="🔎 Pesquise no MeuDia+">
+ 
+                    <button onclick="alert('Digite algo para pesquisar!')">
+                        Pesquisar
+                    </button>
+ 
+                </div>
+ 
+            </div>
+ 
+ 
+            <!-- CARDS -->
+            <div class="grid">
+ 
+                <div class="card">
+ 
+                    <div class="card-icon">
+                        ✅
+                    </div>
+ 
+                    <h3>Tarefas</h3>
+ 
+                    <p class="stat">
+                        0
+                    </p>
+ 
+                    <p>
+                        tarefas cadastradas
+                    </p>
+ 
+                </div>
+ 
+ 
+                <div class="card">
+ 
+                    <div class="card-icon">
+                        📅
+                    </div>
+ 
+                    <h3>Agenda</h3>
+ 
+                    <p class="stat">
+                        0
+                    </p>
+ 
+                    <p>
+                        compromissos
+                    </p>
+ 
+                </div>
+ 
+ 
+                <div class="card">
+ 
+                    <div class="card-icon">
+                        🛒
+                    </div>
+ 
+                    <h3>Compras</h3>
+ 
+                    <p class="stat">
+                        0
+                    </p>
+ 
+                    <p>
+                        itens
+                    </p>
+ 
+                </div>
+ 
+ 
+                <div class="card">
+ 
+                    <div class="card-icon">
+                        📝
+                    </div>
+ 
+                    <h3>Anotações</h3>
+ 
+                    <p class="stat">
+                        0
+                    </p>
+ 
+                    <p>
+                        anotações
+                    </p>
+ 
+                </div>
+ 
+            </div>
+ 
+ 
+            <div class="dashboard-grid">
+ 
+                <div class="box">
+ 
+                    <h2>
+                        📌 Próximas tarefas
+                    </h2>
+ 
+                    <p>
+                        Nenhuma tarefa cadastrada.
+                    </p>
+ 
+                </div>
+ 
+ 
+                <div class="box">
+ 
+                    <h2>
+                        💰 Finanças
+                    </h2>
+ 
+                    <p>
+                        Renda:
+                    </p>
+ 
+                    <strong>
+                        R$ 0,00
+                    </strong>
+ 
+                    <br><br>
+ 
+                    <p>
+                        Gastos:
+                    </p>
+ 
+                    <strong>
+                        R$ 0,00
+                    </strong>
+ 
+                    <br><br>
+ 
+                    <p>
+                        Saldo:
+                    </p>
+ 
+                    <strong>
+                        R$ 0,00
+                    </strong>
+ 
+                </div>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- TAREFAS -->
+        <section id="tarefas" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>✅ Minhas tarefas</h2>
+ 
+                <p>
+                    Organize tudo o que precisa fazer.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <div class="form-grid">
+ 
+                    <div>
+ 
+                        <label>
+                            Tarefa
+                        </label>
+ 
+                        <input
+                            type="text"
+                            placeholder="Ex.: Fazer trabalho">
+ 
+                    </div>
+ 
+ 
+                    <div>
+ 
+                        <label>
+                            Prioridade
+                        </label>
+ 
+                        <select>
+ 
+                            <option>
+                                Normal
+                            </option>
+ 
+                            <option>
+                                Importante
+                            </option>
+ 
+                            <option>
+                                Urgente
+                            </option>
+ 
+                        </select>
+ 
+                    </div>
+ 
+                </div>
+ 
+ 
+                <button class="btn">
+                    ➕ Adicionar tarefa
+                </button>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <h2>
+                    Lista de tarefas
+                </h2>
+ 
+                <p>
+                    Nenhuma tarefa cadastrada.
+                </p>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- AGENDA -->
+        <section id="agenda" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>📅 Minha agenda</h2>
+ 
+                <p>
+                    Organize seus compromissos.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <div class="form-grid">
+ 
+                    <div>
+ 
+                        <label>
+                            Compromisso
+                        </label>
+ 
+                        <input
+                            type="text"
+                            placeholder="Ex.: Consulta">
+ 
+                    </div>
+ 
+ 
+                    <div>
+ 
+                        <label>
+                            Data
+                        </label>
+ 
+                        <input type="date">
+ 
+                    </div>
+ 
+ 
+                    <div>
+ 
+                        <label>
+                            Horário
+                        </label>
+ 
+                        <input type="time">
+ 
+                    </div>
+ 
+ 
+                    <div>
+ 
+                        <label>
+                            Local
+                        </label>
+ 
+                        <input
+                            type="text"
+                            placeholder="Ex.: Centro">
+ 
+                    </div>
+ 
+                </div>
+ 
+ 
+                <button class="btn">
+                    📅 Adicionar compromisso
+                </button>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <h2>
+                    Meus compromissos
+                </h2>
+ 
+                <p>
+                    Nenhum compromisso cadastrado.
+                </p>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- NOTAS -->
+        <section id="notas" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>📝 Minhas anotações</h2>
+ 
+                <p>
+                    Guarde ideias e lembretes.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <label>
+                    Título
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Título da anotação">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Texto
+                </label>
+ 
+                <textarea
+                    placeholder="Escreva aqui...">
+                </textarea>
+ 
+ 
+                <button class="btn">
+                    💾 Salvar anotação
+                </button>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- FINANÇAS -->
+        <section id="financas" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>💰 Minhas finanças</h2>
+ 
+                <p>
+                    Controle sua renda e seus gastos.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="finance-grid">
+ 
+                <div class="finance-card">
+ 
+                    <h3>
+                        💵 Renda
+                    </h3>
+ 
+                    <div class="finance-value entrada">
+                        R$ 0,00
+                    </div>
+ 
+                </div>
+ 
+ 
+                <div class="finance-card">
+ 
+                    <h3>
+                        📉 Gastos
+                    </h3>
+ 
+                    <div class="finance-value saida">
+                        R$ 0,00
+                    </div>
+ 
+                </div>
+ 
+ 
+                <div class="finance-card">
+ 
+                    <h3>
+                        💰 Saldo
+                    </h3>
+ 
+                    <div class="finance-value saldo">
+                        R$ 0,00
+                    </div>
+ 
+                </div>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <h2>
+                    💵 Minha renda
+                </h2>
+ 
+                <label>
+                    Valor da renda
+                </label>
+ 
+                <input
+                    type="number"
+                    placeholder="Ex.: 2500">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Fonte
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Ex.: Salário">
+ 
+ 
+                <button class="btn">
+                    💾 Salvar renda
+                </button>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <h2>
+                    ➕ Adicionar gasto
+                </h2>
+ 
+                <input
+                    type="text"
+                    placeholder="Descrição do gasto">
+ 
+ 
+                <br><br>
+ 
+ 
+                <input
+                    type="number"
+                    placeholder="Valor">
+ 
+ 
+                <br><br>
+ 
+ 
+                <select>
+ 
+                    <option>
+                        Alimentação
+                    </option>
+ 
+                    <option>
+                        Transporte
+                    </option>
+ 
+                    <option>
+                        Casa
+                    </option>
+ 
+                    <option>
+                        Estudos
+                    </option>
+ 
+                    <option>
+                        Lazer
+                    </option>
+ 
+                    <option>
+                        Outros
+                    </option>
+ 
+                </select>
+ 
+ 
+                <button class="btn">
+                    ➕ Adicionar gasto
+                </button>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- COMPRAS -->
+        <section id="compras" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>🛒 Lista de compras</h2>
+ 
+                <p>
+                    Organize suas compras.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <input
+                    type="text"
+                    placeholder="Ex.: Arroz, leite, pão...">
+ 
+                <button class="btn">
+                    ➕ Adicionar
+                </button>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <h2>
+                    Minha lista
+                </h2>
+ 
+                <p>
+                    Sua lista está vazia.
+                </p>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- ESTUDOS -->
+        <section id="estudos" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>📚 Estudos</h2>
+ 
+                <p>
+                    Organize suas atividades escolares.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <label>
+                    Matéria
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Ex.: Matemática">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Atividade
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Ex.: Fazer exercícios">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Data de entrega
+                </label>
+ 
+                <input type="date">
+ 
+ 
+                <button class="btn">
+                    📚 Adicionar atividade
+                </button>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- TRABALHO -->
+        <section id="trabalho" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>💼 Trabalho</h2>
+ 
+                <p>
+                    Organize suas atividades profissionais.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <label>
+                    Tarefa profissional
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Ex.: Entregar relatório">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Prazo
+                </label>
+ 
+                <input type="date">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Observação
+                </label>
+ 
+                <textarea
+                    placeholder="Informações adicionais...">
+                </textarea>
+ 
+ 
+                <button class="btn">
+                    💼 Adicionar atividade
+                </button>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- EMERGÊNCIA -->
+        <section id="emergencia" class="page">
+ 
+            <div class="alerta">
+ 
+                <h2>
+                    🚨 Emergência
+                </h2>
+ 
+                <p>
+                    Em uma emergência, procure um local seguro
+                    e ligue para o serviço adequado.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="emergencias">
+ 
+                <div class="emergencia">
+ 
+                    <div class="emergencia-icon">
+                        🚓
+                    </div>
+ 
+                    <h3>
+                        Polícia
+                    </h3>
+ 
+                    <p>
+                        Emergências policiais.
+                    </p>
+ 
+                    <a
+                        class="ligar"
+                        href="tel:190">
+                        Ligar 190
+                    </a>
+ 
+                </div>
+ 
+ 
+                <div class="emergencia">
+ 
+                    <div class="emergencia-icon">
+                        🚑
+                    </div>
+ 
+                    <h3>
+                        SAMU
+                    </h3>
+ 
+                    <p>
+                        Atendimento médico de urgência.
+                    </p>
+ 
+                    <a
+                        class="ligar"
+                        href="tel:192">
+                        Ligar 192
+                    </a>
+ 
+                </div>
+ 
+ 
+                <div class="emergencia">
+ 
+                    <div class="emergencia-icon">
+                        🚒
+                    </div>
+ 
+                    <h3>
+                        Bombeiros
+                    </h3>
+ 
+                    <p>
+                        Incêndios e emergências.
+                    </p>
+ 
+                    <a
+                        class="ligar"
+                        href="tel:193">
+                        Ligar 193
+                    </a>
+ 
+                </div>
+ 
+ 
+                <div class="emergencia">
+ 
+                    <div class="emergencia-icon">
+                        🚔
+                    </div>
+ 
+                    <h3>
+                        PRF
+                    </h3>
+ 
+                    <p>
+                        Emergências em rodovias federais.
+                    </p>
+ 
+                    <a
+                        class="ligar"
+                        href="tel:191">
+                        Ligar 191
+                    </a>
+ 
+                </div>
+ 
+            </div>
+ 
+        </section>
+ 
+ 
+        <!-- PERFIL -->
+        <section id="perfil" class="page">
+ 
+            <div class="titulo">
+ 
+                <h2>
+                    👤 Meu perfil
+                </h2>
+ 
+                <p>
+                    Configure suas informações.
+                </p>
+ 
+            </div>
+ 
+ 
+            <div class="box">
+ 
+                <label>
+                    Nome
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Seu nome">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Cidade
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Sua cidade">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Profissão
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Sua profissão">
+ 
+ 
+                <br><br>
+ 
+ 
+                <label>
+                    Objetivo
+                </label>
+ 
+                <input
+                    type="text"
+                    placeholder="Seu objetivo">
+ 
+ 
+                <button class="btn">
+                    💾 Salvar perfil
+                </button>
+ 
+            </div>
+ 
+        </section>
+ 
+    </main>
+ 
+ 
+    <!-- RODAPÉ -->
+    <footer>
+ 
+        <strong>
+            MeuDia+
+        </strong>
+ 
+        <br><br>
+ 
+        Organize sua vida em um só lugar.
+ 
+        <br><br>
+ 
+        © 2026 MeuDia+
+ 
+    </footer>
+ 
+ 
+    <!-- JAVASCRIPT BÁSICO -->
+    <script>
+ 
+        function abrirPagina(id, botao) {
+ 
+            document
+                .querySelectorAll(".page")
+                .forEach(function(pagina) {
+ 
+                    pagina.classList.remove("active");
+ 
+                });
+ 
+ 
+            document
+                .getElementById(id)
+                .classList.add("active");
+ 
+ 
+            document
+                .querySelectorAll("nav button")
+                .forEach(function(botaoMenu) {
+ 
+                    botaoMenu.classList.remove("active");
+ 
+                });
+ 
+ 
+            botao.classList.add("active");
+ 
+        }
+ 
+    </script>
+ 
+</body>
+ 
+</html>
+ 
