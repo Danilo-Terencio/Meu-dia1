@@ -14,7 +14,7 @@ function togglePwd(btn) {
   var dica = document.getElementById('dica-conf');
 
   if (senha && forca) {
-    var nomes = ['', 'Fraca', 'Média', 'Boa', 'Forte'];
+    var nomes = ['', 'Weak', 'Fair', 'Good', 'Strong'];
     senha.addEventListener('input', function () {
       var v = senha.value, n = 0;
       if (v.length >= 6) n++;
@@ -23,7 +23,7 @@ function togglePwd(btn) {
       if (/[^A-Za-z0-9]/.test(v)) n++;
       if (!v) n = 0;
       forca.dataset.n = n;
-      forca.querySelector('span').textContent = n ? 'Senha ' + nomes[n].toLowerCase() : '';
+      forca.querySelector('span').textContent = n ? 'Password ' + nomes[n].toLowerCase() : '';
       checar();
     });
   }
@@ -31,7 +31,7 @@ function togglePwd(btn) {
     if (!conf || !dica) return;
     if (!conf.value) { dica.textContent = ''; dica.className = 'dica'; return; }
     var ok = conf.value === senha.value;
-    dica.textContent = ok ? 'As senhas coincidem' : 'As senhas ainda não coincidem';
+    dica.textContent = ok ? 'Passwords match' : 'Passwords do not match yet';
     dica.className = 'dica ' + (ok ? 'ok' : 'erro');
   }
   if (conf) conf.addEventListener('input', checar);
