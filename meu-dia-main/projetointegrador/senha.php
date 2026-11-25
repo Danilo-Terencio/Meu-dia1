@@ -20,7 +20,7 @@ $atual = (string) ($entrada['atual'] ?? '');
 $nova = (string) ($entrada['nova'] ?? '');
 if ($atual === '' || $nova === '') responder(400, false, "Please fill in all fields.");
 if (strlen($nova) < 6) responder(400, false, "Your new password must be at least 6 characters long.");
-if (strlen($nova) > 72) responder(400, false, "A nova senha pode ter no máximo 72 caracteres.");
+if (strlen($nova) > 72) responder(400, false, "Your new password can be up to 72 characters long.");
 
 require "conexao.php";
 $usuarioId = (int) $_SESSION['usuario_id'];
@@ -44,4 +44,4 @@ try {
 }
 
 session_regenerate_id(true);
-responder(200, true, "Password alterada.");
+responder(200, true, "Password changed.");
