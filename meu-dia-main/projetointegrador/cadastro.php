@@ -77,7 +77,7 @@ $olho = '<button type="button" class="password-toggle" onclick="togglePwd(this)"
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MeuDia+ | Create account</title>
+  <title>MeuDia+ | Criar conta</title>
   <script>try{if(sessionStorage.getItem("md_transicao"))document.documentElement.classList.add("md-chegando")}catch(e){}</script>
   <link rel="stylesheet" href="transicao.css">
   <link rel="stylesheet" href="style.css">
@@ -105,7 +105,7 @@ $olho = '<button type="button" class="password-toggle" onclick="togglePwd(this)"
   <main class="auth-right">
     <a class="voltar" href="inicial.html" data-transicao><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg> Back to home</a>
     <div class="auth-box">
-      <div class="auth-head anim" style="--i:0"><h2>Create account</h2><p>Fill in the details below to get started.</p></div>
+      <div class="auth-head anim" style="--i:0"><h2>Criar conta</h2><p>Fill in the details below to get started.</p></div>
 
       <?php if ($erro && isset($mensagensErro[$erro])): ?>
         <div class="msg msg-erro"><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3h.01"/></svg><?= htmlspecialchars($mensagensErro[$erro]) ?></div>
@@ -147,7 +147,7 @@ $olho = '<button type="button" class="password-toggle" onclick="togglePwd(this)"
         <button class="auth-btn anim" style="--i:5" type="submit">CREATE ACCOUNT</button>
       </form>
 
-      <div class="auth-switch anim" style="--i:6">Already have an account? <a href="login.php" data-transicao>Log in</a></div>
+      <div class="auth-switch anim" style="--i:6">Already have an account? <a href="login.php" data-transicao>Entrar</a></div>
     </div>
   </main>
 
