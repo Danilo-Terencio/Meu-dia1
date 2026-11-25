@@ -216,7 +216,7 @@ function adicionarNota(){
         id:Date.now(),
         titulo,
         texto,
-        data:new Date().toLocaleDateString("pt-BR")
+        data:new Date().toLocaleDateString("en-GB")
     });
 
     salvarTudo();
@@ -835,7 +835,7 @@ function renderTrabalho(){
     if(!trabalhos.length){
         div.innerHTML =
             `<p class="vazio">
-                Nenhuma atividade profissional cadastrada.
+                No work activities added yet.
             </p>`;
         return;
     }
@@ -1085,7 +1085,8 @@ function abrirEditor(titulo, campos, aoSalvar){
             if(c.tipo === "number") el.step = "0.01";
         }
 
-        el.value = (c.valor === undefined || c.valor === null) ? "" : c.valor;
+        const valorCampo = (c.chave === "categoria" || c.chave === "prioridade") ? traduzirOpcao(c.valor) : c.valor;
+        el.value = (valorCampo === undefined || valorCampo === null) ? "" : valorCampo;
         inputs[c.chave] = el;
 
         wrap.appendChild(el);
@@ -1179,7 +1180,7 @@ function editarNota(id){
 
     abrirEditor("Edit note", [
         {chave:"titulo", label:"Title", valor:n.titulo},
-        {chave:"texto", label:"Texto", tipo:"textarea", valor:n.texto}
+        {chave:"texto", label:"Text", tipo:"textarea", valor:n.texto}
     ], v => {
         if(!v.titulo || !v.texto){ alert("Please enter a title and text."); return false; }
         n.titulo = v.titulo;
@@ -1195,8 +1196,8 @@ function editarGasto(id){
 
     abrirEditor("Edit expense", [
         {chave:"descricao", label:"Description", valor:g.descricao},
-        {chave:"valor", label:"Valor", tipo:"number", valor:g.valor},
-        {chave:"categoria", label:"Categoria", tipo:"select",
+        {chave:"valor", label:"Amount", tipo:"number", valor:g.valor},
+        {chave:"categoria", label:"Category", tipo:"select",
          opcoes:["Food","Transportation","Home","Studies","Leisure","Shopping","Other"],
          valor:g.categoria}
     ], v => {
@@ -1218,7 +1219,7 @@ function editarCompra(id){
     if(!c) return;
 
     abrirEditor("Edit item", [
-        {chave:"produto", label:"Produto", valor:c.produto}
+        {chave:"produto", label:"Product", valor:c.produto}
     ], v => {
         if(!v.produto){ alert("Enter a product."); return false; }
         c.produto = v.produto;
@@ -1298,18 +1299,18 @@ function celulaCSV(v){
 
 function exportarCSV(){
     const grupos = [
-        ["Tarefas", tarefas],
-        ["Agenda", agenda],
-        ["Notas", notas],
-        ["Gastos", gastos],
+        ["Tasks", tarefas],
+        ["Calendar", agenda],
+        ["Notes", notas],
+        ["Expenses", gastos],
         ["Shopping", compras],
         ["Studies", estudos],
-        ["Trabalhos", trabalhos]
+        ["Work", trabalhos]
     ];
 
     const linhas = [];
 
-    linhas.push(celulaCSV("Renda") + ";" + celulaCSV(renda));
+    linhas.push(celulaCSV("Income") + ";" + celulaCSV(renda));
     linhas.push("");
 
     grupos.forEach(([nome, lista]) => {
