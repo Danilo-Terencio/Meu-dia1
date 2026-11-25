@@ -120,7 +120,7 @@ function adicionarTarefa(){
     const prazo = $("tarefaPrazo").value;
 
     if(!texto){
-        alert("Enter a task.");
+        alert("Digite uma tarefa.");
         return;
     }
 
@@ -216,7 +216,7 @@ function adicionarNota(){
         id:Date.now(),
         titulo,
         texto,
-        data:new Date().toLocaleDateString("en-GB")
+        data:new Date().toLocaleDateString("pt-BR")
     });
 
     salvarTudo();
@@ -270,7 +270,7 @@ function adicionarGasto(){
         descricao,
         valor:valorGasto,
         categoria,
-        data:new Date().toLocaleDateString("en-GB")
+        data:new Date().toLocaleDateString("pt-BR")
     });
 
     salvarTudo();
@@ -290,7 +290,7 @@ function removerGasto(id){
 
 /* ================= COMPRAS ================= */
 
-function adicionarShopping item(){
+function adicionarCompra(){
 
     const produto = valor("produtoInput");
 
@@ -310,7 +310,7 @@ function adicionarShopping item(){
     renderizar();
 }
 
-function marcarShopping item(id){
+function marcarCompra(id){
 
     const item = compras.find(c => c.id === id);
 
@@ -320,7 +320,7 @@ function marcarShopping item(id){
     renderizar();
 }
 
-function removerShopping item(id){
+function removerCompra(id){
     if(!confirm("Are you sure you want to delete this item?")) return;
 
     compras = compras.filter(c => c.id !== id);
@@ -332,11 +332,11 @@ function removerShopping item(id){
 
 /* ================= ESTUDOS ================= */
 
-function adicionarStudy item(){
+function adicionarEstudo(){
 
     const materia = valor("materia");
     const atividade = valor("atividade");
-    const data = $("dataStudy item").value;
+    const data = $("dataEstudo").value;
 
     if(!materia || !atividade){
         alert("Please enter a subject and an assignment.");
@@ -356,13 +356,13 @@ function adicionarStudy item(){
     limpar(
         "materia",
         "atividade",
-        "dataStudy item"
+        "dataEstudo"
     );
 
     renderizar();
 }
 
-function concluirStudy item(id){
+function concluirEstudo(id){
 
     const item = estudos.find(e => e.id === id);
 
@@ -372,7 +372,7 @@ function concluirStudy item(id){
     renderizar();
 }
 
-function removerStudy item(id){
+function removerEstudo(id){
     if(!confirm("Are you sure you want to delete this item?")) return;
 
     estudos = estudos.filter(e => e.id !== id);
@@ -572,8 +572,8 @@ function renderizar(){
     renderAgenda();
     renderNotas();
     renderFinancas();
-    renderShopping items();
-    renderStudy items();
+    renderCompras();
+    renderEstudos();
     renderTrabalho();
     atualizarDashboard();
 }
@@ -600,7 +600,7 @@ function renderTarefas(){
                 <div>
                     <strong class="texto-multi ${t.concluida ? "concluida" : ""}">${esc(t.texto)}</strong>
                     <br>
-                    <small>Priority: ${esc(traduzirOpcao(t.prioridade))}</small>
+                    <small>Prioridade: ${esc(traduzirOpcao(t.prioridade))}</small>
                     ${t.prazo ? "<br>" + etiquetaPrazo(t) : ""}
                 </div>
             </div>
@@ -743,8 +743,8 @@ function renderFinancas(){
 
 /* ================= RENDER COMPRAS ================= */
 
-function renderShopping items(){
-    const div = $("listaShopping items");
+function renderCompras(){
+    const div = $("listaCompras");
 
     if(!compras.length){
         div.innerHTML = `<p class="vazio">Your list is empty.</p>`;
@@ -757,16 +757,16 @@ function renderShopping items(){
                 <input
                     type="checkbox"
                     ${c.comprado ? "checked" : ""}
-                    onchange="marcarShopping item(${c.id})">
+                    onchange="marcarCompra(${c.id})">
                 <span class="${c.comprado ? "concluida" : ""}">
                     ${esc(c.produto)}
                 </span>
             </label>
             <div class="item-actions">
-                <button class="editar" onclick="editarShopping item(${c.id})">
+                <button class="editar" onclick="editarCompra(${c.id})">
                     Edit
                 </button>
-                <button onclick="removerShopping item(${c.id})">
+                <button onclick="removerCompra(${c.id})">
                     Delete
                 </button>
             </div>
@@ -777,9 +777,9 @@ function renderShopping items(){
 
 /* ================= RENDER ESTUDOS ================= */
 
-function renderStudy items(){
+function renderEstudos(){
 
-    const div = $("listaStudy items");
+    const div = $("listaEstudos");
 
     if(!estudos.length){
         div.innerHTML =
@@ -796,7 +796,7 @@ function renderStudy items(){
                     class="check"
                     type="checkbox"
                     ${e.concluida ? "checked" : ""}
-                    onchange="concluirStudy item(${e.id})">
+                    onchange="concluirEstudo(${e.id})">
 
                 <div>
 
@@ -808,7 +808,7 @@ function renderStudy items(){
 
                     <small>
                         ${esc(e.atividade)}
-                        ${e.data ? " • Due: " + e.data : ""}
+                        ${e.data ? " • Entrega: " + e.data : ""}
                     </small>
 
                 </div>
@@ -817,7 +817,7 @@ function renderStudy items(){
 
             <button
                 class="btn btn-danger"
-                onclick="removerStudy item(${e.id})">
+                onclick="removerEstudo(${e.id})">
                 Delete
             </button>
 
@@ -835,7 +835,7 @@ function renderTrabalho(){
     if(!trabalhos.length){
         div.innerHTML =
             `<p class="vazio">
-                No work activities added yet.
+                Nenhuma atividade profissional cadastrada.
             </p>`;
         return;
     }
@@ -884,11 +884,11 @@ function renderTrabalho(){
 function atualizarDashboard(){
     $("totalTarefas").textContent = tarefas.length;
     $("totalAgenda").textContent = agenda.length;
-    $("totalShopping items").textContent = compras.length;
+    $("totalCompras").textContent = compras.length;
     $("totalNotas").textContent = notas.length;
 
     const pendentes = tarefasPendentes();
-    const overdues = pendentes.filter(t => statusPrazo(t) === "atrasada").length;
+    const atrasadas = pendentes.filter(t => statusPrazo(t) === "atrasada").length;
     const proximas = pendentes.slice(0,5);
 
     const div = $("resumoTarefas");
@@ -898,8 +898,8 @@ function atualizarDashboard(){
         return;
     }
 
-    const aviso = overdues
-        ? `<div class="aviso-atraso">You have ${atrasadas} tarefa${atrasadas > 1 ? "s" : ""} overdue${atrasadas > 1 ? "s" : ""}.</div>`
+    const aviso = atrasadas
+        ? `<div class="aviso-atraso">Você tem ${atrasadas} tarefa${atrasadas > 1 ? "s" : ""} atrasada${atrasadas > 1 ? "s" : ""}.</div>`
         : "";
 
     div.innerHTML = aviso + proximas.map(t => `
@@ -944,7 +944,7 @@ function mostrarData(){
     const agora = new Date();
 
     const texto = agora.toLocaleDateString(
-        "en-GB",
+        "pt-BR",
         {
             weekday:"long",
             day:"numeric",
@@ -1005,7 +1005,7 @@ function etiquetaPrazo(t){
     return `<span class="prazo ${s}">${rotulo}${formatarData(t.prazo)}</span>`;
 }
 
-// Pendentes: overdues primeiro, depois as de hoje, depois por prazo
+// Pendentes: atrasadas primeiro, depois as de hoje, depois por prazo
 function tarefasPendentes(){
     const peso = t => {
         const s = statusPrazo(t);
@@ -1045,8 +1045,8 @@ function avisar(texto){
 
 /* ================= JANELA DE EDIÇÃO ================= */
 // campos: [{chave, label, tipo, opcoes, valor}]
-// aoSave(valores) pode devolver false para manter a janela aberta
-function abrirEditor(titulo, campos, aoSave){
+// aoSalvar(valores) pode devolver false para manter a janela aberta
+function abrirEditor(titulo, campos, aoSalvar){
     const fundo = document.createElement("div");
     fundo.className = "modal-fundo";
 
@@ -1117,7 +1117,7 @@ function abrirEditor(titulo, campos, aoSave){
     salvarBtn.onclick = () => {
         const valores = {};
         Object.keys(inputs).forEach(k => valores[k] = inputs[k].value.trim());
-        if(aoSave(valores) !== false) fechar();
+        if(aoSalvar(valores) !== false) fechar();
     };
 
     cancelar.onclick = fechar;
@@ -1140,7 +1140,7 @@ function editarTarefa(id){
 
     abrirEditor("Edit task", [
         {chave:"texto", label:"Task", tipo:"textarea", valor:t.texto},
-        {chave:"prioridade", label:"Prioridade", tipo:"select",
+        {chave:"prioridade", label:"Priority", tipo:"select",
          opcoes:["Normal","Importante","Urgente"], valor:t.prioridade},
         {chave:"prazo", label:"Due date (optional)", tipo:"date", valor:t.prazo || ""}
     ], v => {
@@ -1158,7 +1158,7 @@ function editarEvento(id){
     if(!e) return;
 
     abrirEditor("Edit event", [
-        {chave:"nome", label:"Compromisso", valor:e.nome},
+        {chave:"nome", label:"Event", valor:e.nome},
         {chave:"data", label:"Date", tipo:"date", valor:e.data},
         {chave:"hora", label:"Time", tipo:"time", valor:e.hora || ""},
         {chave:"local", label:"Local", valor:e.local || ""}
@@ -1213,7 +1213,7 @@ function editarGasto(id){
     });
 }
 
-function editarShopping item(id){
+function editarCompra(id){
     const c = compras.find(x => x.id === id);
     if(!c) return;
 
