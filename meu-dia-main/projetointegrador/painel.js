@@ -17,6 +17,17 @@ let tarefas = ler("tarefas"),
 
 /* ================= FUNÇÕES AUXILIARES ================= */
 
+function traduzirOpcao(valor){
+    const traducoes = {
+        "Importante":"Important", "Urgente":"Urgent",
+        "Alimentação":"Food", "Transporte":"Transportation", "Casa":"Home",
+        "Estudos":"Studies", "Lazer":"Leisure", "Compras":"Shopping", "Outros":"Other"
+    };
+    return traducoes[valor] || valor;
+}
+
+
+
 const $ = id => document.getElementById(id);
 
 const valor = id => $(id).value.trim();
@@ -505,7 +516,7 @@ function buscarTudo(){
 
     pesquisar(
         tarefas,
-        "Tarefa",
+        "Task",
         ["texto"],
         "texto"
     );
@@ -533,7 +544,7 @@ function buscarTudo(){
 
     pesquisar(
         trabalhos,
-        "Trabalho",
+        "Work",
         ["texto"],
         "texto"
     );
@@ -589,7 +600,7 @@ function renderTarefas(){
                 <div>
                     <strong class="texto-multi ${t.concluida ? "concluida" : ""}">${esc(t.texto)}</strong>
                     <br>
-                    <small>Priority: ${esc(t.prioridade)}</small>
+                    <small>Priority: ${esc(traduzirOpcao(t.prioridade))}</small>
                     ${t.prazo ? "<br>" + etiquetaPrazo(t) : ""}
                 </div>
             </div>
@@ -709,7 +720,7 @@ function renderFinancas(){
                 <strong>${esc(g.descricao)}</strong>
                 <br>
                 <small>
-                    ${esc(g.categoria)} • ${esc(g.data)}
+                    ${esc(traduzirOpcao(g.categoria))} • ${esc(g.data)}
                 </small>
             </div>
             <div>
@@ -1065,7 +1076,7 @@ function abrirEditor(titulo, campos, aoSave){
             c.opcoes.forEach(o => {
                 const op = document.createElement("option");
                 op.value = o;
-                op.textContent = o;
+                op.textContent = traduzirOpcao(o);
                 el.appendChild(op);
             });
         } else {
@@ -1128,10 +1139,10 @@ function editarTarefa(id){
     if(!t) return;
 
     abrirEditor("Edit task", [
-        {chave:"texto", label:"Tarefa", tipo:"textarea", valor:t.texto},
+        {chave:"texto", label:"Task", tipo:"textarea", valor:t.texto},
         {chave:"prioridade", label:"Prioridade", tipo:"select",
          opcoes:["Normal","Importante","Urgente"], valor:t.prioridade},
-        {chave:"prazo", label:"Prazo (opcional)", tipo:"date", valor:t.prazo || ""}
+        {chave:"prazo", label:"Due date (optional)", tipo:"date", valor:t.prazo || ""}
     ], v => {
         if(!v.texto){ alert("Enter a task."); return false; }
         t.texto = v.texto;
@@ -1148,8 +1159,8 @@ function editarEvento(id){
 
     abrirEditor("Edit event", [
         {chave:"nome", label:"Compromisso", valor:e.nome},
-        {chave:"data", label:"Data", tipo:"date", valor:e.data},
-        {chave:"hora", label:"Horário", tipo:"time", valor:e.hora || ""},
+        {chave:"data", label:"Date", tipo:"date", valor:e.data},
+        {chave:"hora", label:"Time", tipo:"time", valor:e.hora || ""},
         {chave:"local", label:"Local", valor:e.local || ""}
     ], v => {
         if(!v.nome || !v.data){ alert("Enter the event and date."); return false; }
@@ -1167,7 +1178,7 @@ function editarNota(id){
     if(!n) return;
 
     abrirEditor("Edit note", [
-        {chave:"titulo", label:"Título", valor:n.titulo},
+        {chave:"titulo", label:"Title", valor:n.titulo},
         {chave:"texto", label:"Texto", tipo:"textarea", valor:n.texto}
     ], v => {
         if(!v.titulo || !v.texto){ alert("Please enter a title and text."); return false; }
@@ -1183,7 +1194,7 @@ function editarGasto(id){
     if(!g) return;
 
     abrirEditor("Edit expense", [
-        {chave:"descricao", label:"Descrição", valor:g.descricao},
+        {chave:"descricao", label:"Description", valor:g.descricao},
         {chave:"valor", label:"Valor", tipo:"number", valor:g.valor},
         {chave:"categoria", label:"Categoria", tipo:"select",
          opcoes:["Food","Transportation","Home","Studies","Leisure","Shopping","Other"],
